@@ -19,7 +19,7 @@ jobs:
       uses: actions/setup-java@v3.5.0
       with:
         java-version: '18'
-        distribution: 'tmurin'
+        distribution: 'temurin'
         
     - name: build with maven
       run:
