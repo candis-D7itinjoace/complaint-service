@@ -22,22 +22,19 @@ jobs:
     - name: build with maven
       run:
         mvn clean install package
-        
-    - uses: actions/upload-artifact@v3.1.0
-      with:
-        name: reclamation-service-0.0.1
-        path: /target
-        
-    - run: docker build . --file Dockerfile --tag ${{secrets.DOCKER_USER}}/complaint-service
-    - name: login to docker hub
-      env: 
-        DOCKER_USER: ${{secrets.DOCKER_USER}}
-        DOCKER_PASSWORD: ${{secrets.DOCKER_PASSWORD}}
-      run: |
-        docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
     
-    - name: Push the docker image to docker hub
-      run: docker push ${{secrets.DOCKER_USER}}/complaint-service
+    - name: build docker image
+      run: docker build . --file Dockerfile --tag ${{secrets.ACR_SERVER_URL}}/complaint-service
+
+    - name: login to ACR
+      uses: Azure/docker-login@v1
+      with:
+        username: ${{secrets.ACR_USER}}
+        password: ${{secrets.ACR_PASSWORD}}
+        login-server: ${{secrets.ACR_SERVER_URL}}
+    
+    - name: Push the docker image to ACR
+      run: docker push ${{secrets.ACR_SERVER_URL}}/complaint-service
         
         
         
