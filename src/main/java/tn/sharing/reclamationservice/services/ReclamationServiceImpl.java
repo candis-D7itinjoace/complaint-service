@@ -41,7 +41,7 @@ public class ReclamationServiceImpl implements ReclamationService{
 
     @Override
     public Page<Reclamation> getAllReclamationsForUser(Long employeeId, int pageSize, int pageNumber) {
-        boolean exists = Boolean.TRUE.equals(webClient.get().uri("http://localhost:8081/auth/userExists/" + employeeId)
+        boolean exists = Boolean.TRUE.equals(webClient.get().uri("http://domain-header-service/auth/userExists/" + employeeId)
                 .retrieve()
                 .bodyToMono(Boolean.class)
                 .block());
@@ -58,7 +58,7 @@ public class ReclamationServiceImpl implements ReclamationService{
 
     @Override
     public Page<Reclamation> getAllReclamationsForEnterprise(Long enterpriseId, int pageSize, int pageNumber) {
-        boolean exists = Boolean.TRUE.equals(webClient.get().uri("http://localhost:8081/auth/enterpriseExists/" + enterpriseId)
+        boolean exists = Boolean.TRUE.equals(webClient.get().uri("http://domain-header-service/auth/enterpriseExists/" + enterpriseId)
                 .retrieve()
                 .bodyToMono(Boolean.class)
                 .block());

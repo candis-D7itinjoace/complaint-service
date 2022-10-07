@@ -22,19 +22,16 @@ jobs:
     - name: build with maven
       run:
         mvn clean install package
-    
-    - name: build docker image
-      run: docker build . --file Dockerfile --tag ${{secrets.ACR_SERVER_URL}}/complaint-service
+    - name: Docker login  
+      run: docker login -u ${{secrets.DOCKER_USER}} -p ${{secrets.DOCKER_PASSWORD}}
 
-    - name: login to ACR
-      uses: Azure/docker-login@v1
-      with:
-        username: ${{secrets.ACR_USER}}
-        password: ${{secrets.ACR_PASSWORD}}
-        login-server: ${{secrets.ACR_SERVER_URL}}
-    
-    - name: Push the docker image to ACR
-      run: docker push ${{secrets.ACR_SERVER_URL}}/complaint-service
+    - name: build docker image and push to docker hub 
+      run: |
+        docker build . -t ${{secrets.DOCKER_USER}}/complaint-service: ${{github.sha}}
+        docker push ${{ secrets.DOCKER_USER }}/domain-header:${{ github.sha }}
+    - name: announce the eeeeend
+      run: echo "the eneeeeeeed"
+          
         
         
         

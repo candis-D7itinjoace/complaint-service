@@ -21,6 +21,10 @@ public class ReclamationResource {
         @Autowired
         private ReclamationService reclamationService;
 
+        private String sayHello(){
+                return "Hello Bayrem";
+        }
+
         @PostMapping("/add")
         private String addReclamation(@RequestBody @Valid ReclamationModel reclamationModel){
                 Reclamation reclamation = reclamationService.addReclamation(reclamationModel, reclamationModel.getUserId(), reclamationModel.getEnterpriseId());
@@ -65,7 +69,7 @@ public class ReclamationResource {
 
         @GetMapping("/userExists/{userId}")
         private Boolean userExists(@PathVariable("userId") Long userId) {
-                return Boolean.TRUE.equals(webClient.get().uri("http://localhost:8081/auth/userExists/" + userId)
+                return Boolean.TRUE.equals(webClient.get().uri("http://domain-header-service/auth/userExists/" + userId)
                         .retrieve()
                         .bodyToMono(Boolean.class)
                         .block());
