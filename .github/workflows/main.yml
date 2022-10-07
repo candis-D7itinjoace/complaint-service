@@ -27,7 +27,7 @@ jobs:
 
     - name: build docker image and push to docker hub 
       run: |
-        docker build . -t ${{secrets.DOCKER_USER}}/complaint-service: ${{github.sha}}
+        docker build . -t ${{secrets.DOCKER_USER}}/complaint-service:${{github.sha}}
         docker push ${{ secrets.DOCKER_USER }}/domain-header:${{ github.sha }}
     - name: announce the eeeeend
       run: echo "the eneeeeeeed"
